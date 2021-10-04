@@ -31,7 +31,7 @@ class Extrakto:
             os.path.expanduser("~/.config"), "extrakto/extrakto.conf"
         )
 
-        conf.read([default_conf, user_conf])
+        conf.read([default_conf, user_conf], "UTF-8")
         sections = conf.sections()
         if not "path" in sections or not "url" in sections:
             raise Exception("extrakto.conf incomplete")
