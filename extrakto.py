@@ -111,12 +111,15 @@ class FilterDef:
         return res
 
 
-def get_lines(text, *, min_length=5, prefix_name=False):
+def get_lines(text, *, min_length=5, prefix_name=False, exclude_pattern=None):
     lines = []
 
     for raw_line in text.splitlines():
         line = raw_line.strip()
         if len(line) >= min_length:
+            if exclude_pattern:
+                if re.search(exclude_pattern, line):
+                    continue
             if prefix_name:
                 lines.append("line: " + line)
             else:
@@ -146,7 +149,7 @@ def main(parser):
         run_list = extrakto.all()
 
     if args.lines:
-        res += get_lines(text, min_length=args.min_length, prefix_name=args.name)
+        res += get_lines(text, min_length=args.min_length, prefix_name=args.name, exclude_pattern=args.exclude_pattern)
 
     for name in run_list:
         res += extrakto[name].filter(text)
@@ -204,6 +207,10 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--warn-empty", action="store_true", help="warn if result is empty"
+    )
+
+    parser.add_argument(
+        "-e", "--exclude-pattern", default=None, help="exclude pattern in line filter mode", type=str
     )
 
     main(parser)

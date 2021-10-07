@@ -146,7 +146,7 @@ capture() {
         if [[ $mode == all ]]; then
             capture_panes | $extrakto --warn-empty --alt --all --name -r
         elif [[ $mode == line ]]; then
-            capture_panes | $extrakto --warn-empty -rl
+            capture_panes | $extrakto --warn-empty -rl --e '^\['
         else
             capture_panes | $extrakto --warn-empty -rw
         fi
