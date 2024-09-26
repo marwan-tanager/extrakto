@@ -22,6 +22,10 @@ get_option() {
             echo $(get_tmux_option $option "tab")
             ;;
 
+        "@extrakto_default_filter_mode")
+            echo $(get_tmux_option $option "all")
+            ;;
+
         "@extrakto_split_direction")
             echo $(get_tmux_option $option "a")
             ;;

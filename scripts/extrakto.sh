@@ -133,7 +133,7 @@ show_fzf_error() {
 capture() {
     local mode header_tmpl header out res key text query
 
-    mode=word
+    mode=$(get_option "@extrakto_default_filter_mode")
     header_tmpl="${COLORS[BOLD]}${insert_key}${COLORS[OFF]}=insert"
     header_tmpl+=", ${COLORS[BOLD]}${copy_key}${COLORS[OFF]}=copy"
     [[ -n "$open_tool" ]] && header_tmpl+=", ${COLORS[BOLD]}${open_key}${COLORS[OFF]}=open"
@@ -146,7 +146,7 @@ capture() {
         if [[ $mode == all ]]; then
             capture_panes | $extrakto --warn-empty --alt --all --name -r
         elif [[ $mode == line ]]; then
-            capture_panes | $extrakto --warn-empty -rl
+            capture_panes | $extrakto --warn-empty -rl --e '^\['
         else
             capture_panes | $extrakto --warn-empty -rw
         fi
